@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://8ivo26aq0h8w"]
+
+[ext_resource type="Script" uid="uid://crs20gt6jhc1l" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://b5n6a66dibey8" path="res://platform.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bwu1f3qupj2b4" path="res://player.tscn" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://d2axqlb0mukwv" path="res://pixil-frame-0.png" id="5_lquwl"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lc576"]
+distance = 1.0
+
+[node name="Main" type="Node2D" unique_id=1370979856]
+script = ExtResource("1_h2yge")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=2016552144]
+show_behind_parent = true
+light_mask = 9
+z_index = -6
+rotation = -0.0023122872
+scale = Vector2(0.99999994, 0.99999994)
+scroll_scale = Vector2(0.5, 0.5)
+repeat_size = Vector2(0, 800)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1872112821]
+show_behind_parent = true
+position = Vector2(385.76086, 103.892265)
+scale = Vector2(27.839073, 23.634586)
+texture = ExtResource("5_lquwl")
+
+[node name="Player" parent="." unique_id=2125560171 instance=ExtResource("4_1bvp3")]
+position = Vector2(238, 623)
+scale = Vector2(1.15, 1.15)
+
+[node name="Platform" parent="." unique_id=41953938 instance=ExtResource("3_lquwl")]
+position = Vector2(240, 660)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1372295107]
+position = Vector2(240, 400)
+
+[node name="Area2D" type="Area2D" parent="Camera2D" unique_id=1590188141]
+position = Vector2(0, 420)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Area2D" unique_id=1230702233]
+shape = SubResource("WorldBoundaryShape2D_lc576")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1513046343]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=163077676]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 22
+
+[connection signal="body_entered" from="Camera2D/Area2D" to="." method="_on_area_2d_body_entered"]
